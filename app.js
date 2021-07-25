@@ -2,12 +2,14 @@ const todoInput = document.querySelector('.nova-task');
 const todoBtn = document.querySelector('.adicionar');
 const todoList = document.querySelector('.todo-list');
 const excluirBtn = document.querySelector('.excluir-btn')
+const xBtn = document.querySelector('.x-btn')
 
 
 document.addEventListener('DOMContentLoaded', buscarTodos)
 todoBtn.addEventListener('click', adicionarTodo)
 todoList.addEventListener('click', clickTodo)
 excluirBtn.addEventListener('click', excluirTodo)
+xBtn.addEventListener('click', fechaModal)
 
 
 //funcao que faz a criação dos todos
@@ -54,8 +56,6 @@ function clickTodo(e){
 
   if (itemClicado.classList[0] === 'trash-btn'){
     $('.filter, .modal').fadeIn(500)
-
-
 
   }
   if (itemClicado.classList[0] === 'completed-btn'){
@@ -143,6 +143,14 @@ function removeTodos(todo){
 //---------------------------------------------------------
 // open modal
 //---------------------------------------------------------
+
+//funcao que fecha modal
+
+function fechaModal (){
+    $('.filter, .modal').fadeOut(200);
+}
+
+
 
 $('.trash-btn').on('click', function() {
     console.log('oi')
