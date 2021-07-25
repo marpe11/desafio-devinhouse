@@ -24,17 +24,20 @@ function adicionarTodo (event){
         divTodo.classList.add('todo');
 
         const novoTodo = document.createElement('li');
-        novoTodo.innerText = todoInput.value;
-        novoTodo.classList.add('todo-item');
-        divTodo.appendChild(novoTodo);
-
-        salvarLocalStoreTodo(todoInput.value)
 
         //botao check
         const completedButton = document.createElement('button');
         completedButton.innerHTML = '<i class ="fas fa-check-circle"></i>';
         completedButton.classList.add('completed-btn');
         divTodo.appendChild(completedButton);
+        
+        novoTodo.innerText = todoInput.value;
+        novoTodo.classList.add('todo-item');
+        divTodo.appendChild(novoTodo);
+
+        salvarLocalStoreTodo(todoInput.value)
+
+       
         
         //botoes excluir
         const botaoDescarte = document.createElement('button');
@@ -64,7 +67,7 @@ function clickTodo(e){
   }
 }
 
-
+//funcao para excluirTodo
 function excluirTodo(e){
 
     console.log(e.target)
@@ -103,17 +106,18 @@ function buscarTodos(){
         divTodo.classList.add('todo');
 
         const novoTodo = document.createElement('li');
+
+         //botao check
+         const completedButton = document.createElement('button');
+         completedButton.innerHTML = '<i class ="fas fa-check-circle"></i>';
+         completedButton.classList.add('completed-btn');
+         divTodo.appendChild(completedButton);
+         
         novoTodo.innerText = todo;
         novoTodo.classList.add('todo-item');
         divTodo.appendChild(novoTodo);
-
      
-
-        //botao check
-        const completedButton = document.createElement('button');
-        completedButton.innerHTML = '<i class ="fas fa-check-circle"></i>';
-        completedButton.classList.add('completed-btn');
-        divTodo.appendChild(completedButton);
+        
         
         //botoes excluir
         const botaoDescarte = document.createElement('button');
@@ -139,11 +143,6 @@ function removeTodos(todo){
     localStorage.setItem('todos', JSON.stringify(todos))
 }
 
-//modal confirmacao de exclusao
-//---------------------------------------------------------
-// open modal
-//---------------------------------------------------------
-
 //funcao que fecha modal
 
 function fechaModal (){
@@ -152,18 +151,3 @@ function fechaModal (){
 
 
 
-$('.trash-btn').on('click', function() {
-    console.log('oi')
-    // fade in filter layer and modal
-    $('.filter, .modal').fadeIn(200);
-  });
-  
-  //---------------------------------------------------------
-  // close modal
-  //---------------------------------------------------------
-  
-  // close modal by clicking the "close" button or background (outside modal)
-  $('.modal-close, .filter').on('click', function() {
-    // fade out filter layer and modal
-    $('.filter, .modal').fadeOut(200);
-  });
