@@ -1,12 +1,16 @@
 const todoInput = document.querySelector('.nova-task');
 const todoBtn = document.querySelector('.adicionar');
 const todoList = document.querySelector('.todo-list');
+const excluirBtn = document.querySelector('.excluir-btn')
 
 
 document.addEventListener('DOMContentLoaded', buscarTodos)
 todoBtn.addEventListener('click', adicionarTodo)
-todoList.addEventListener('click', deletarTodo)
+todoList.addEventListener('click', clickTodo)
+excluirBtn.addEventListener('click', excluirTodo)
 
+
+//funcao que faz a criação dos todos
 function adicionarTodo (event){
     event.preventDefault();
 
@@ -33,7 +37,7 @@ function adicionarTodo (event){
         //botoes excluir
         const botaoDescarte = document.createElement('button');
         botaoDescarte.innerHTML = '<i class ="fas fa-trash-alt"></i>';
-        botaoDescarte.classList.add('trash-btn');
+        botaoDescarte.classList.add('trash-btn')
         divTodo.appendChild(botaoDescarte);
 
         todoList.appendChild(divTodo);
@@ -42,14 +46,17 @@ function adicionarTodo (event){
      
     }
 }
-function deletarTodo(e){
+//funcao que deleta o todo da tela quando o usuario clica
+function clickTodo(e){
 
-  const itemClicado = e.target;
+    itemClicado = e.target
+
 
   if (itemClicado.classList[0] === 'trash-btn'){
-    const todo =  itemClicado.parentElement;
-    removeTodos(todo)
-    todo.remove()
+    $('.filter, .modal').fadeIn(500)
+
+
+
   }
   if (itemClicado.classList[0] === 'completed-btn'){
     const todo =  itemClicado.parentElement;
@@ -57,6 +64,20 @@ function deletarTodo(e){
   }
 }
 
+
+function excluirTodo(e){
+
+    console.log(e.target)
+
+    $('.filter, .modal').fadeOut(200);
+
+    const todo =  itemClicado.parentElement;
+    removeTodos(todo)
+    todo.remove()
+
+}
+
+//salva o todo adicionado no localStorage
 function salvarLocalStoreTodo(todo){
     let todos;
     if (localStorage.getItem('todos') === null){
@@ -68,7 +89,7 @@ function salvarLocalStoreTodo(todo){
     todos.push(todo)
     localStorage.setItem('todos', JSON.stringify(todos))
 }
-
+//recria todos os todos que estão no localstorage
 function buscarTodos(){
     let todos;
     if (localStorage.getItem('todos') === null){
@@ -104,7 +125,7 @@ function buscarTodos(){
         
     });
 }
-
+//remove o todo do localstorage ao clicar no delete
 function removeTodos(todo){
     let todos;
     if (localStorage.getItem('todos') === null){
@@ -117,3 +138,24 @@ function removeTodos(todo){
     todos.splice(todos.indexOf(todoIndex), 1)
     localStorage.setItem('todos', JSON.stringify(todos))
 }
+
+//modal confirmacao de exclusao
+//---------------------------------------------------------
+// open modal
+//---------------------------------------------------------
+
+$('.trash-btn').on('click', function() {
+    console.log('oi')
+    // fade in filter layer and modal
+    $('.filter, .modal').fadeIn(200);
+  });
+  
+  //---------------------------------------------------------
+  // close modal
+  //---------------------------------------------------------
+  
+  // close modal by clicking the "close" button or background (outside modal)
+  $('.modal-close, .filter').on('click', function() {
+    // fade out filter layer and modal
+    $('.filter, .modal').fadeOut(200);
+  });
