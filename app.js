@@ -3,7 +3,8 @@ const todoBtn = document.querySelector('.adicionar');
 const todoList = document.querySelector('.todo-list');
 
 
-todoBtn.addEventListener('click', adicionarTodo);
+document.addEventListener('DOMContentLoaded', buscarTodos)
+todoBtn.addEventListener('click', adicionarTodo)
 todoList.addEventListener('click', deletarTodo)
 
 function adicionarTodo (event){
@@ -47,6 +48,7 @@ function deletarTodo(e){
 
   if (itemClicado.classList[0] === 'trash-btn'){
     const todo =  itemClicado.parentElement;
+    removeTodos(todo)
     todo.remove()
   }
   if (itemClicado.classList[0] === 'completed-btn'){
@@ -74,7 +76,44 @@ function buscarTodos(){
     }else{
         todos = JSON.parse(localStorage.getItem('todos'))    
     }
-    todos.array.forEach(todo => {
+    todos.forEach(function(todo){
+
+        const divTodo = document.createElement('div');
+        divTodo.classList.add('todo');
+
+        const novoTodo = document.createElement('li');
+        novoTodo.innerText = todo;
+        novoTodo.classList.add('todo-item');
+        divTodo.appendChild(novoTodo);
+
+     
+
+        //botao check
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class ="fas fa-check-circle"></i>';
+        completedButton.classList.add('completed-btn');
+        divTodo.appendChild(completedButton);
+        
+        //botoes excluir
+        const botaoDescarte = document.createElement('button');
+        botaoDescarte.innerHTML = '<i class ="fas fa-trash-alt"></i>';
+        botaoDescarte.classList.add('trash-btn');
+        divTodo.appendChild(botaoDescarte);
+
+        todoList.appendChild(divTodo);
         
     });
+}
+
+function removeTodos(todo){
+    let todos;
+    if (localStorage.getItem('todos') === null){
+        todos = []
+    }else{
+        todos = JSON.parse(localStorage.getItem('todos'))    
+    }
+
+    const todoIndex = todo.children[0].innerText
+    todos.splice(todos.indexOf(todoIndex), 1)
+    localStorage.setItem('todos', JSON.stringify(todos))
 }
